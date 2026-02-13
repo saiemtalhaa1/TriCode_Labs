@@ -40,3 +40,8 @@ Many people need formal outfits for interviews/events but do not want to buy exp
 ## Safety (high level)
 - Handovers should occur in **safe public locations** (e.g., university campus / public area)
 - Avoid publicly sharing personal addresses/phone numbers
+
+## Project Management
+
+GitHub Project Board:
+[TriCode Labs – Sprint Board] (https://github.com/saiemtalhaa1/TriCode_Labs/projects?query=is%3Aopen)
