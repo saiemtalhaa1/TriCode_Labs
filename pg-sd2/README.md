@@ -43,5 +43,5 @@ Many people need formal outfits for interviews/events but do not want to buy exp
 
 ## Project Management
 
-GitHub Project Board:
-[TriCode Labs – Sprint Board] (https://github.com/saiemtalhaa1/TriCode_Labs/projects?query=is%3Aopen)
+GitHub Project Board:  
+[TriCode Labs – Sprint Board](https://github.com/saiemtalhaa1/TriCode_Labs/projects)
