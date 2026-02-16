@@ -1,23 +1,29 @@
 # Code of Conduct (TriCode Labs)
 
-## Respect & Communication
-- Be respectful in discussions.
-- Criticise ideas, not people.
-- Keep communication professional.
+## 1. Respect & communication
+- Be respectful in messages, meetings, and reviews.
+- Criticise code, not people.
+- Keep communication clear and polite.
 
-## Team Responsibility
-- Each member must contribute and commit regularly.
-- Inform the team if unable to complete a task.
+## 2. Team responsiveness
+- Reply to team messages within 24 hours (or notify if unavailable).
+- Attend agreed meetings or inform the leader in advance.
 
-## GitHub Workflow
-- Use Issues and Project Board properly.
-- Write clear commit messages.
-- Do not push broken code.
+## 3. GitHub workflow rules
+- Use Issues + Project Board for tasks.
+- Make small, frequent commits with clear messages.
+- Use Pull Requests for major changes (if used), and request review.
 
-## Conflict Resolution
-- Discuss issues calmly.
-- If unresolved, leader makes final decision.
+## 4. Quality and accountability
+- Test before pushing (run the app / docker if relevant).
+- No breaking changes on main without informing the team.
+- If stuck, ask for help early.
 
-## Academic Integrity
+## 5. Conflict resolution
+- Discuss calmly in the group first.
+- If unresolved, ask the group leader to mediate.
+- Document the decision in meeting minutes.
+
+## 6. Academic integrity
 - No plagiarism.
-- All work must be original and understood by all members.
+- All members contribute and understand what is submitted.
