@@ -1,7 +1,7 @@
 # Meeting Minutes – Sprint 1 (TriCode Labs)
 
-Date: 16/02/2026  
-Location: Online  
+Date: 12/02/2026  
+Location: Online (Whatsapp) 
 Attendees: Saiem Talha, Farhan Ahmed, Yash Chauhan  
 
 ## Agenda
