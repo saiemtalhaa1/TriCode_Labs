@@ -2,6 +2,7 @@
 
 Date: 12/02/2026  
 Location: Online (Whatsapp) 
+
 Attendees: Saiem Talha, Farhan Ahmed, Yash Chauhan  
 
 ## Agenda
