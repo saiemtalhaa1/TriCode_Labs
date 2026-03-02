@@ -1,169 +1,133 @@
 # OutfitShare  
-### Software Engineering Coursework – CMP-N204-0  
-**Team: TriCode Labs**
+A Community-Driven Clothing Sharing Platform
 
 ---
 
-## 📌 Project Overview
+## 🌍 Overview
 
-OutfitShare is a community-driven web application designed to support the theme of **“Sharing, exchange and building community”**.
+OutfitShare is a dynamic web application designed to support sustainable fashion and community collaboration. The platform enables users to lend and borrow outfits within a trusted network, reducing clothing waste and lowering costs for special occasions and everyday needs.
 
-The platform enables users to lend and borrow outfits for job interviews, special occasions, and everyday use. The goal is to:
+Instead of purchasing new clothing for one-time use, users can share outfits through a structured and transparent borrowing system.
 
-- Reduce clothing waste  
-- Support affordability  
-- Encourage sustainable fashion  
-- Strengthen local community collaboration  
-
-The system is developed as part of the **Level 5 Software Engineering module** at the University of Roehampton.
-
----
-
-## 👥 Team Members
-
-- **S M Saiem Talha (A00019842)** – Team Leader & GitHub Administrator  
-- **Farhan Ahmed Sahol (A00027052)** – Requirements & System Design Lead  
-- **Yash Chauhan (A00028054)** – UI/UX & Interface Design Lead  
-- **Enric Landes (A00093322)** – UML & Documentation Support  
+OutfitShare promotes:
+- Sustainability
+- Affordability
+- Community engagement
+- Trust and accountability
 
 ---
 
-## 🛠 Technologies Used
+## ✨ Key Features
 
-This project follows the module technology stack requirements:
-
-### Frontend
-- HTML
-- CSS
-- JavaScript
-- PUG templating engine
-
-### Backend
-- Node.js
-- Express.js
-- MySQL Database
-
-### DevOps / CI-CD
-- Docker (containerised development environment)
-- Git
-- GitHub
-- GitHub Actions (Sprint 4)
-
-### Project Management
-- GitHub Issues
-- GitHub Project (Kanban Board)
-- Milestones
+### 👤 Account & Profile Management
+- Secure user registration
+- Unified account system (users can both borrow and lend)
+- Optional profile personalisation (size, height, preferences)
+- Profile management dashboard
 
 ---
 
-## 🧠 Core Features (MVP)
-
-### Account & Profile
-- User registration
-- Profile management
-- Optional size personalisation
-- Borrow & lend from one unified account
-
-### Listings
-- Create outfit listings
+### 👗 Outfit Listings
+- Create and manage listings
+- Upload images and descriptions
+- Add categories and tags
 - Set availability dates
-- Add tags/categories
-- Browse and filter listings
-- Product detail page
+- View detailed listing pages
 
-### Borrowing Workflow
-- Send borrow request
-- Lender approval/rejection
-- Prevent overlapping bookings
-- Track request status
+---
 
-### Trust & Reviews
-- Leave ratings & written reviews
-- Separate trust ratings for borrowing and lending
-- Admin moderation support
+### 🔍 Browse & Search
+- Community browse page
+- Keyword search functionality
+- Filter by category, size, and location
+- Personalised "Match My Size" filtering
+- Clear card-based layout for easy comparison
 
-### Reward & Boost System
-- Earn sustainability points
-- Referral multipliers
-- Boost listing visibility using reward points
+---
 
-### Admin Controls
-- Moderate listings
-- Remove inappropriate reviews
+### 🔄 Borrowing Workflow
+- Send borrow requests
+- Lender approval or rejection
+- Request status tracking (Pending, Approved, Rejected, Active, Returned, Completed)
+- Automatic double-booking prevention
+- Availability slot validation
+
+---
+
+### ⭐ Reviews & Trust System
+- Leave ratings and written reviews
+- Optional image uploads with reviews
+- Separate trust ratings for borrowing and lending behaviour
+- Transparent reputation system
+
+---
+
+### 🎁 Giveaway Feature
+- List items as giveaways
+- Promote sustainability through clothing donation
+- Reward environmentally responsible actions
+
+---
+
+### 🏆 Reward & Boost System
+- Earn points for successful transactions
+- Referral bonus multipliers
+- Use reward points to boost listing visibility
+- Visually identifiable boosted listings
+
+---
+
+### 🔔 Notifications
+- Approval and rejection alerts
+- Reward updates
+- Referral notifications
+- Profile completion reminders
+- Transaction updates
+
+---
+
+### 🛡 Admin Moderation
+- Moderate listings and reviews
+- Remove inappropriate content
 - Suspend users if necessary
+- Maintain platform safety and governance
 
 ---
 
-## 📂 Sprint Structure
+## 🧱 System Architecture
 
-This project follows a Scrum-based sprint methodology:
+OutfitShare is built as a full-stack, database-driven web application using:
 
-### Sprint 1
-- Repository setup
-- Code of Conduct
-- Personas
-- Ethical considerations
-- Docker environment verification
-- Kanban board setup
+- **Frontend:** HTML, CSS, JavaScript, PUG
+- **Backend:** Node.js, Express.js
+- **Database:** MySQL
+- **Containerisation:** Docker
+- **Version Control:** Git & GitHub
 
-### Sprint 2
-- User stories defined
-- Use case diagram
-- Wireframes
-- Activity diagrams
-- ER Diagram
-- Class Diagram
-- Sequence Diagrams
-- State Diagram
-- Component Diagram
-- Data Flow Diagram
-- Sprint 3 planning
-
-### Sprint 3
-- Implementation using:
-  - MySQL
-  - Express
-  - PUG
-  - Docker
-- Users list page
-- Profile page
-- Listing page
-- Detail page
-- Tags/categories
-
-### Sprint 4 (Planned)
-- User login
-- Points system
-- Advanced features
-- GitHub Actions CI workflow
-- Deployment pipeline
+The system follows a modular architecture separating:
+- Client Interface
+- Backend Application Logic
+- Authentication & Trust Modules
+- Reward Processing
+- Notification Services
+- Database Layer
 
 ---
 
-## 📊 GitHub Project Board
+## 🎯 Project Goal
 
-All development tasks are tracked using GitHub Projects (Kanban methodology).
+The primary goal of OutfitShare is to reduce fashion waste while building a trusted sharing community. By integrating structured workflows, trust ratings, reward incentives, and moderation mechanisms, the platform ensures both usability and reliability.
 
-🔗 Repository:  
-https://github.com/saiemtalhaa1/TriCode_Labs  
-
-🔗 Project Board:  
-https://github.com/users/saiemtalhaa1/projects/2  
-
-Milestones are used to group sprint deliverables (e.g., **Sprint 3 Implementation**).
+OutfitShare demonstrates how technology can support sustainability through collaborative consumption and digital trust systems.
 
 ---
 
-## 🐳 Development Environment
+## 🚀 Status
 
-The application runs in Docker containers to ensure:
+The project is currently under active development and continues to evolve with new features and refinements.
 
-- Consistent environment across all team members  
-- Easy setup  
-- Reliable database configuration  
-- Simplified deployment  
+---
 
-To run the development environment:
+## 📄 License
 
-```bash
-docker-compose up --build
+This project is developed for educational purposes.
