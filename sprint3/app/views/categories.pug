@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  section.section
+    .container
+      h1.page-title Categories
+      p.page-subtitle Browse outfits by category to find exactly what you need.
+
+      .categories-grid
+        each tag in tags
+          a.category-card(href=`/listings?tag=${tag.name}`)
+            .category-icon= tag.name.charAt(0)
+            h3= tag.name
+            p #{tag.listing_count} outfit#{tag.listing_count !== 1 ? 's' : ''}
+
+      each tag in tags
+        if tagListings[tag.name] && tagListings[tag.name].length > 0
+          .category-section
+            .category-header
+              h2= tag.name
+              a.view-all(href=`/listings?tag=${tag.name}`) View all →
+            .listings-row
+              each listing in tagListings[tag.name].slice(0, 4)
+                .listing-card.listing-card-small
+                  .card-image
+                    .card-placeholder= listing.title.charAt(0)
+                  .card-body
+                    h3.card-title
+                      a(href=`/listings/${listing.listing_id}`)= listing.title
+                    .card-meta
+                      span.card-size Size: #{listing.size}
+                    a.btn.btn-small(href=`/listings/${listing.listing_id}`) View

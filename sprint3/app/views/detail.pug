@@ -1,0 +1,99 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .breadcrumb
+        a(href="/") Home
+        span  / 
+        a(href="/listings") Listings
+        span  / 
+        span= listing.title
+
+      .detail-layout
+        .detail-image
+          .detail-placeholder= listing.title.charAt(0)
+          if listing.boost_active
+            span.badge.badge-boost.badge-large Boosted Listing
+          if listing.listing_type === 'Giveaway'
+            span.badge.badge-giveaway.badge-large Free Giveaway
+
+        .detail-info
+          h1.detail-title= listing.title
+
+          .detail-meta
+            .meta-item
+              span.meta-label Type
+              span.meta-value= listing.listing_type
+            .meta-item
+              span.meta-label Size
+              span.meta-value= listing.size
+            .meta-item
+              span.meta-label Location
+              span.meta-value= listing.location || 'Not specified'
+            if avgRating
+              .meta-item
+                span.meta-label Rating
+                span.meta-value #{avgRating} ★ (#{reviews.length} review#{reviews.length !== 1 ? 's' : ''})
+
+          if tags.length > 0
+            .detail-tags
+              each tag in tags
+                a.tag-pill(href=`/listings?tag=${tag.tag_name}`)= tag.tag_name
+
+          .detail-description
+            h3 Description
+            p= listing.description
+
+          if slots.length > 0
+            .detail-availability
+              h3 Available Dates
+              .slots-list
+                each slot in slots
+                  .slot-item
+                    span #{new Date(slot.start_date).toLocaleDateString('en-GB')} to #{new Date(slot.end_date).toLocaleDateString('en-GB')}
+
+          if listing.listing_type === 'Borrow'
+            a.btn.btn-primary.btn-large(href="#") Reserve Now
+          else
+            a.btn.btn-primary.btn-large(href="#") Request Giveaway
+
+          .detail-owner
+            h3 Listed by
+            .owner-card
+              .avatar-placeholder.avatar-small= listing.owner_name.charAt(0)
+              .owner-details
+                a.owner-name(href=`/users/${listing.owner_user_id}`)= listing.owner_name
+                if listing.owner_location
+                  span.owner-location= listing.owner_location
+                if listing.owner_rating
+                  span.owner-rating Lend Rating: #{listing.owner_rating.toFixed(1)} ★
+
+      .detail-reviews
+        h2.section-title Reviews (#{reviews.length})
+        if reviews.length > 0
+          .reviews-list
+            each review in reviews
+              .review-card
+                .review-header
+                  .review-author
+                    span= review.reviewer_name
+                  span.review-rating= '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)
+                p.review-comment= review.comment
+        else
+          p.empty-state No reviews yet. Be the first to review!
+
+      if related.length > 0
+        h2.section-title You Might Also Like
+        .listings-grid
+          each item in related
+            .listing-card
+              .card-image
+                .card-placeholder= item.title.charAt(0)
+              .card-body
+                h3.card-title
+                  a(href=`/listings/${item.listing_id}`)= item.title
+                .card-meta
+                  span.card-size Size: #{item.size}
+                  span.card-location= item.location
+                a.btn.btn-small(href=`/listings/${item.listing_id}`) View Details

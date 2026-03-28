@@ -1,0 +1,16 @@
+{
+  "name": "outfitshare",
+  "version": "1.0.0",
+  "description": "OutfitShare - Community-Driven Clothing Sharing Platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "pug": "^3.0.2",
+    "nodemon": "^3.0.1"
+  }
+}

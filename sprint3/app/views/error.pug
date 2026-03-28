@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .error-page
+        h1 Oops!
+        p= message || 'Something went wrong.'
+        a.btn.btn-primary(href="/") Go Home

@@ -1,0 +1,73 @@
+extends layout
+
+block content
+  section.section
+    .container
+      h1.page-title Browse Outfits
+      p.page-subtitle Find the perfect outfit for any occasion.
+
+      .filter-bar
+        form.filter-form(method="GET" action="/listings")
+          .filter-row
+            .filter-group
+              input.search-input(type="text" name="search" placeholder="Search outfits..." value=filters.search || '')
+            .filter-group
+              select(name="tag")
+                option(value="") All Categories
+                each tag in tags
+                  option(value=tag.name selected=(filters.tag === tag.name))= tag.name
+            .filter-group
+              select(name="size")
+                option(value="") All Sizes
+                each s in ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+                  option(value=s selected=(filters.size === s))= s
+            .filter-group
+              select(name="type")
+                option(value="") All Types
+                option(value="Borrow" selected=(filters.type === 'Borrow')) Borrow
+                option(value="Giveaway" selected=(filters.type === 'Giveaway')) Giveaway
+            .filter-group
+              select(name="location")
+                option(value="") All Locations
+                each loc in locations
+                  option(value=loc.location selected=(filters.location === loc.location))= loc.location
+            button.btn.btn-primary(type="submit") Search
+          if filters.search || filters.tag || filters.size || filters.type || filters.location
+            a.clear-filters(href="/listings") Clear all filters
+
+      .results-info
+        p Showing #{listings.length} outfit#{listings.length !== 1 ? 's' : ''}
+
+      if listings.length > 0
+        .listings-grid
+          each listing in listings
+            .listing-card
+              .card-image
+                .card-placeholder= listing.title.charAt(0)
+                if listing.boost_active
+                  span.badge.badge-boost Boosted
+                if listing.listing_type === 'Giveaway'
+                  span.badge.badge-giveaway Giveaway
+              .card-body
+                h3.card-title
+                  a(href=`/listings/${listing.listing_id}`)= listing.title
+                p.card-desc= listing.description.length > 80 ? listing.description.substring(0, 80) + '...' : listing.description
+                .card-meta
+                  span.card-size Size: #{listing.size}
+                  span.card-location= listing.location
+                if listing.tags
+                  .card-tags
+                    each tag in listing.tags.split(',')
+                      span.tag-small= tag.trim()
+                .card-footer
+                  .card-owner
+                    span By 
+                    a(href=`/users/${listing.owner_id}`)= listing.owner_name
+                    if listing.owner_rating
+                      span.owner-rating  #{listing.owner_rating.toFixed(1)} ★
+                  a.btn.btn-small(href=`/listings/${listing.listing_id}`) View Details
+      else
+        .empty-state
+          h3 No outfits found
+          p Try adjusting your filters or 
+            a(href="/listings") browse all outfits
