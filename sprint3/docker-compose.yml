@@ -36,5 +36,17 @@ services:
         condition: service_healthy
     command: ["npx", "nodemon", "index.js"]
 
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: outfitshare-phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: outfitshare_user
+      PMA_PASSWORD: outfitshare_pass
+    depends_on:
+      - db
+
 volumes:
   db_data:

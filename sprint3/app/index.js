@@ -1149,6 +1149,26 @@ app.post("/admin/users/:id/reinstate", requireAdmin, async (req, res) => {
   }
 });
 
+// =====================
+// STATIC PAGES
+// =====================
+app.get("/about", (req, res) => {
+  res.render("about", { title: "About Us - OutfitShare" });
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact", { title: "Contact Us - OutfitShare" });
+});
+
+app.post("/contact", (req, res) => {
+  // In production this would send an email
+  res.render("contact", { title: "Contact Us - OutfitShare", success: "Thank you for your message! We'll get back to you within 48 hours." });
+});
+
+app.get("/terms", (req, res) => {
+  res.render("terms", { title: "Terms of Use - OutfitShare" });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).render("error", { message: "Page not found" });
