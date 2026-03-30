@@ -68,9 +68,6 @@ Open **http://localhost:3000** in your browser.
 - Inbox with unread count badge
 - Notifications for approvals, rejections, rewards, admin actions
 
-### CI/CD
-- GitHub Actions workflow for build, test, and Docker validation
-
 ## Tech Stack
 - **Frontend:** PUG, CSS
 - **Backend:** Node.js, Express.js
