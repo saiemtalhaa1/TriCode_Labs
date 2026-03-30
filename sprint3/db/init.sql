@@ -20,6 +20,15 @@ CREATE TABLE IF NOT EXISTS users (
     profile_completed BOOLEAN DEFAULT FALSE,
     bio TEXT DEFAULT NULL,
     location VARCHAR(100) DEFAULT NULL,
+    phone VARCHAR(20) DEFAULT NULL,
+    date_of_birth DATE DEFAULT NULL,
+    address TEXT DEFAULT NULL,
+    profile_image VARCHAR(500) DEFAULT NULL,
+    role ENUM('user', 'admin', 'suspended') DEFAULT 'user',
+    privacy_email BOOLEAN DEFAULT TRUE,
+    privacy_phone BOOLEAN DEFAULT FALSE,
+    privacy_age BOOLEAN DEFAULT TRUE,
+    privacy_location BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -139,15 +148,15 @@ CREATE TABLE IF NOT EXISTS notifications (
 -- =====================
 
 -- Insert Users
-INSERT INTO users (name, email, password, height, weight, age, clothing_size, borrow_rating, lend_rating, reward_points, profile_completed, bio, location) VALUES
-('Jane Doe', 'jane@example.com', 'password123', 165.0, 58.0, 24, 'M', 4.5, 4.8, 120, TRUE, 'Fashion lover in London. I love sharing and discovering new styles!', 'London'),
-('Alex Smith', 'alex@example.com', 'password123', 178.0, 75.0, 28, 'L', 4.2, 4.6, 85, TRUE, 'Sustainable fashion enthusiast. Sharing is caring!', 'Manchester'),
-('Priya Patel', 'priya@example.com', 'password123', 160.0, 55.0, 22, 'S', 4.8, 4.9, 200, TRUE, 'Student who loves dressing up for events without breaking the bank.', 'London'),
-('Tom Wilson', 'tom@example.com', 'password123', 182.0, 80.0, 30, 'XL', 3.9, 4.3, 50, TRUE, 'Community-minded guy who believes in reducing waste.', 'Birmingham'),
-('Mia Chen', 'mia@example.com', 'password123', 168.0, 62.0, 26, 'M', 4.7, 4.5, 150, TRUE, 'Designer with a passion for circular fashion.', 'Bristol'),
-('Sam Johnson', 'sam@example.com', 'password123', NULL, NULL, NULL, NULL, 0.0, 0.0, 0, FALSE, NULL, 'Leeds'),
-('Olivia Brown', 'olivia@example.com', 'password123', 170.0, 65.0, 25, 'M', 4.3, 4.7, 95, TRUE, 'Event planner always looking for the perfect outfit.', 'London'),
-('Raj Kumar', 'raj@example.com', 'password123', 175.0, 72.0, 27, 'L', 4.1, 4.4, 70, TRUE, 'Believes fashion should be accessible to everyone.', 'Edinburgh');
+INSERT INTO users (name, email, password, height, weight, age, clothing_size, borrow_rating, lend_rating, reward_points, profile_completed, bio, location, profile_image, role) VALUES
+('Jane Doe', 'jane@example.com', 'password123', 165.0, 58.0, 24, 'M', 4.5, 4.8, 120, TRUE, 'Fashion lover in London. I love sharing and discovering new styles!', 'London', 'https://randomuser.me/api/portraits/women/44.jpg', 'admin'),
+('Alex Smith', 'alex@example.com', 'password123', 178.0, 75.0, 28, 'L', 4.2, 4.6, 85, TRUE, 'Sustainable fashion enthusiast. Sharing is caring!', 'Manchester', 'https://randomuser.me/api/portraits/men/32.jpg', 'user'),
+('Priya Patel', 'priya@example.com', 'password123', 160.0, 55.0, 22, 'S', 4.8, 4.9, 200, TRUE, 'Student who loves dressing up for events without breaking the bank.', 'London', 'https://randomuser.me/api/portraits/women/68.jpg', 'user'),
+('Tom Wilson', 'tom@example.com', 'password123', 182.0, 80.0, 30, 'XL', 3.9, 4.3, 50, TRUE, 'Community-minded guy who believes in reducing waste.', 'Birmingham', 'https://randomuser.me/api/portraits/men/75.jpg', 'user'),
+('Mia Chen', 'mia@example.com', 'password123', 168.0, 62.0, 26, 'M', 4.7, 4.5, 150, TRUE, 'Designer with a passion for circular fashion.', 'Bristol', 'https://randomuser.me/api/portraits/women/26.jpg', 'user'),
+('Sam Johnson', 'sam@example.com', 'password123', NULL, NULL, NULL, NULL, 0.0, 0.0, 0, FALSE, NULL, 'Leeds', NULL, 'user'),
+('Olivia Brown', 'olivia@example.com', 'password123', 170.0, 65.0, 25, 'M', 4.3, 4.7, 95, TRUE, 'Event planner always looking for the perfect outfit.', 'London', 'https://randomuser.me/api/portraits/women/90.jpg', 'user'),
+('Raj Kumar', 'raj@example.com', 'password123', 175.0, 72.0, 27, 'L', 4.1, 4.4, 70, TRUE, 'Believes fashion should be accessible to everyone.', 'Edinburgh', 'https://randomuser.me/api/portraits/men/46.jpg', 'user');
 
 -- Insert Admin
 INSERT INTO admins (name, email, password) VALUES
@@ -168,18 +177,18 @@ INSERT INTO tags (name, description) VALUES
 
 -- Insert Listings
 INSERT INTO listings (title, description, size, listing_type, allow_guest_requests, boost_active, image_url, location, owner_id) VALUES
-('Summer Blazer', 'Light cotton blazer perfect for summer events. Barely worn, excellent condition.', 'M', 'Borrow', TRUE, FALSE, '/images/blazer.jpg', 'London', 1),
-('Blue Blouse', 'Elegant silk blouse, great for office or dinner. Size S, dry clean only.', 'S', 'Borrow', FALSE, FALSE, '/images/blouse.jpg', 'London', 1),
-('Denim Jacket', 'Classic denim jacket, fits UK10-12. Great for layering in spring.', 'M', 'Borrow', TRUE, TRUE, '/images/denim.jpg', 'Manchester', 2),
-('Evening Gown', 'Stunning black evening gown, floor length. Perfect for galas and formal events.', 'S', 'Borrow', FALSE, FALSE, '/images/gown.jpg', 'London', 3),
-('White Trainers', 'Clean white sneakers, UK size 8. Hardly worn, great condition.', '8', 'Borrow', TRUE, FALSE, '/images/trainers.jpg', 'Birmingham', 4),
-('Floral Maxi Dress', 'Beautiful floral print maxi dress. Perfect for weddings and garden parties.', 'M', 'Borrow', TRUE, TRUE, '/images/floral.jpg', 'Bristol', 5),
-('Grey Suit', 'Two-piece grey suit, slim fit. Ideal for interviews and formal occasions.', 'L', 'Borrow', FALSE, FALSE, '/images/suit.jpg', 'London', 7),
-('Vintage Leather Bag', 'Genuine leather vintage handbag. Giving away as part of declutter.', 'One Size', 'Giveaway', TRUE, FALSE, '/images/bag.jpg', 'Edinburgh', 8),
-('Running Shoes', 'Nike running shoes, UK size 9. Used a few times, still in great shape.', '9', 'Giveaway', TRUE, FALSE, '/images/running.jpg', 'Leeds', 6),
-('Wool Scarf', 'Handmade wool scarf, warm and cosy. Perfect for winter.', 'One Size', 'Borrow', TRUE, FALSE, '/images/scarf.jpg', 'Manchester', 2),
-('Cocktail Dress', 'Red cocktail dress, knee length. Great for parties and nights out.', 'S', 'Borrow', FALSE, FALSE, '/images/cocktail.jpg', 'London', 3),
-('Linen Shirt', 'Relaxed fit linen shirt in white. Breathable and stylish for summer.', 'L', 'Borrow', TRUE, FALSE, '/images/linen.jpg', 'Bristol', 5);
+('Summer Blazer', 'Light cotton blazer perfect for summer events. Barely worn, excellent condition.', 'M', 'Borrow', TRUE, FALSE, 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=300&fit=crop', 'London', 1),
+('Blue Blouse', 'Elegant silk blouse, great for office or dinner. Size S, dry clean only.', 'S', 'Borrow', FALSE, FALSE, 'https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=400&h=300&fit=crop', 'London', 1),
+('Denim Jacket', 'Classic denim jacket, fits UK10-12. Great for layering in spring.', 'M', 'Borrow', TRUE, TRUE, 'https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=400&h=300&fit=crop', 'Manchester', 2),
+('Evening Gown', 'Stunning black evening gown, floor length. Perfect for galas and formal events.', 'S', 'Borrow', FALSE, FALSE, 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=400&h=300&fit=crop', 'London', 3),
+('White Trainers', 'Clean white sneakers, UK size 8. Hardly worn, great condition.', '8', 'Borrow', TRUE, FALSE, 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=300&fit=crop', 'Birmingham', 4),
+('Floral Maxi Dress', 'Beautiful floral print maxi dress. Perfect for weddings and garden parties.', 'M', 'Borrow', TRUE, TRUE, 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&h=300&fit=crop', 'Bristol', 5),
+('Grey Suit', 'Two-piece grey suit, slim fit. Ideal for interviews and formal occasions.', 'L', 'Borrow', FALSE, FALSE, 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=300&fit=crop', 'London', 7),
+('Vintage Leather Bag', 'Genuine leather vintage handbag. Giving away as part of declutter.', 'One Size', 'Giveaway', TRUE, FALSE, 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=300&fit=crop', 'Edinburgh', 8),
+('Running Shoes', 'Nike running shoes, UK size 9. Used a few times, still in great shape.', '9', 'Giveaway', TRUE, FALSE, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop', 'Leeds', 6),
+('Wool Scarf', 'Handmade wool scarf, warm and cosy. Perfect for winter.', 'One Size', 'Borrow', TRUE, FALSE, 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&h=300&fit=crop', 'Manchester', 2),
+('Cocktail Dress', 'Red cocktail dress, knee length. Great for parties and nights out.', 'S', 'Borrow', FALSE, FALSE, 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=300&fit=crop', 'London', 3),
+('Linen Shirt', 'Relaxed fit linen shirt in white. Breathable and stylish for summer.', 'L', 'Borrow', TRUE, FALSE, 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=300&fit=crop', 'Bristol', 5);
 
 -- Assign tags to listings
 INSERT INTO listing_tags (listing_id, tag_id) VALUES

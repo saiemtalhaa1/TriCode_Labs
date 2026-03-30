@@ -5,20 +5,47 @@ block content
     .container
       .profile-header
         .profile-avatar
-          .avatar-placeholder.avatar-large= user.name.charAt(0)
+          if user.profile_image
+            img.avatar-img.avatar-large(src=user.profile_image alt=user.name)
+          else
+            .avatar-placeholder.avatar-large= user.name.charAt(0)
         .profile-info
           h1= user.name
-          if user.location
-            p.profile-location= user.location
+          if currentUser && currentUser.user_id === user.user_id
+            .profile-actions
+              a.btn.btn-secondary.btn-small(href="/edit-profile") Edit Profile
+              a.btn.btn-secondary.btn-small(href="/settings") Settings
           if user.bio
             p.profile-bio= user.bio
-          .profile-details
+
+          .profile-detail-grid
+            if user.location && (user.privacy_location || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Location
+                span.detail-value= user.location
             if user.clothing_size
-              span.detail-badge Size: #{user.clothing_size}
+              .profile-detail-item
+                span.detail-label Size
+                span.detail-value= user.clothing_size
+            if user.age && (user.privacy_age || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Age
+                span.detail-value= user.age
+            if user.email && (user.privacy_email || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Email
+                span.detail-value= user.email
+            if user.phone && (user.privacy_phone || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Phone
+                span.detail-value= user.phone
+
+          .profile-details
             if user.profile_completed
               span.detail-badge.badge-verified Profile Completed
             else
               span.detail-badge.badge-pending Profile Incomplete
+
           .profile-stats
             .profile-stat
               span.stat-number= stats.listings
@@ -46,7 +73,10 @@ block content
           each listing in listings
             .listing-card
               .card-image
-                .card-placeholder= listing.title.charAt(0)
+                if listing.image_url
+                  img(src=listing.image_url alt=listing.title)
+                else
+                  .card-placeholder= listing.title.charAt(0)
                 if listing.listing_type === 'Giveaway'
                   span.badge.badge-giveaway Giveaway
                 if listing.boost_active

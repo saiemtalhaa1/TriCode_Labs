@@ -23,7 +23,10 @@ block content
               each listing in tagListings[tag.name].slice(0, 4)
                 .listing-card.listing-card-small
                   .card-image
-                    .card-placeholder= listing.title.charAt(0)
+                    if listing.image_url
+                      img(src=listing.image_url alt=listing.title)
+                    else
+                      .card-placeholder= listing.title.charAt(0)
                   .card-body
                     h3.card-title
                       a(href=`/listings/${listing.listing_id}`)= listing.title

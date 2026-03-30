@@ -1,0 +1,68 @@
+extends ../layout
+
+block content
+  section.section
+    .container
+      h1.page-title Admin Dashboard
+      p.page-subtitle Platform overview and moderation tools.
+
+      .admin-stats
+        .admin-stat-card
+          span.admin-stat-number= stats.users
+          span.admin-stat-label Total Users
+        .admin-stat-card
+          span.admin-stat-number= stats.listings
+          span.admin-stat-label Total Listings
+        .admin-stat-card
+          span.admin-stat-number= stats.pendingRequests
+          span.admin-stat-label Pending Requests
+        .admin-stat-card
+          span.admin-stat-number= stats.reviews
+          span.admin-stat-label Total Reviews
+
+      .admin-nav
+        a.btn.btn-secondary(href="/admin/users") Manage Users
+        a.btn.btn-secondary(href="/admin/listings") Manage Listings
+        a.btn.btn-secondary(href="/admin/reviews") Manage Reviews
+
+      .admin-grid
+        .admin-section
+          h2.section-title Recent Users
+          if recentUsers.length > 0
+            .admin-table
+              each user in recentUsers
+                .admin-row
+                  .admin-row-main
+                    span.admin-row-title= user.name
+                    span.admin-row-meta= user.email
+                    span.admin-row-meta= user.location || 'No location'
+                  .admin-row-actions
+                    span.status-badge(class=user.role === 'admin' ? 'status-active' : user.role === 'suspended' ? 'status-pending' : 'status-completed')= user.role
+                    a.btn.btn-small(href=`/users/${user.user_id}`) View
+
+        .admin-section
+          h2.section-title Recent Listings
+          if recentListings.length > 0
+            .admin-table
+              each listing in recentListings
+                .admin-row
+                  .admin-row-main
+                    span.admin-row-title= listing.title
+                    span.admin-row-meta By #{listing.owner_name} | #{listing.size} | #{listing.location}
+                  .admin-row-actions
+                    a.btn.btn-small(href=`/listings/${listing.listing_id}`) View
+                    form.inline-form(method="POST" action=`/admin/listings/${listing.listing_id}/remove` onsubmit="return confirm('Remove this listing?')")
+                      button.btn.btn-small.btn-danger(type="submit") Remove
+
+        .admin-section
+          h2.section-title Recent Reviews
+          if recentReviews.length > 0
+            .admin-table
+              each review in recentReviews
+                .admin-row
+                  .admin-row-main
+                    span.admin-row-title= '★'.repeat(review.rating) + ' — ' + review.listing_title
+                    span.admin-row-meta By #{review.reviewer_name}: "#{review.comment ? review.comment.substring(0, 60) : ''}"
+                  .admin-row-actions
+                    form.inline-form(method="POST" action=`/admin/reviews/${review.review_id}/remove` onsubmit="return confirm('Remove this review?')")
+                      button.btn.btn-small.btn-danger(type="submit") Remove

@@ -10,7 +10,10 @@ block content
         each user in users
           .user-card
             .user-avatar
-              .avatar-placeholder= user.name.charAt(0)
+              if user.profile_image
+                img.avatar-img(src=user.profile_image alt=user.name)
+              else
+                .avatar-placeholder= user.name.charAt(0)
             .user-info
               h3
                 a(href=`/users/${user.user_id}`)= user.name

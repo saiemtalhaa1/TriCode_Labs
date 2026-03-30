@@ -14,7 +14,42 @@ html(lang="en")
           a(href="/listings") Browse
           a(href="/categories") Categories
           a(href="/users") Community
-        a.nav-btn(href="#") Login
+        .nav-auth
+          if currentUser
+            a.nav-notif(href="/notifications")
+              | Notifications
+              if unreadCount > 0
+                span.notif-count= unreadCount
+            .nav-dropdown
+              button.nav-dropdown-btn
+                if currentUser.profile_image
+                  img.nav-avatar(src=currentUser.profile_image alt=currentUser.name)
+                else
+                  span.nav-avatar-letter= currentUser.name.charAt(0)
+                span= currentUser.name
+                span.dropdown-arrow ▾
+              .nav-dropdown-menu
+                .dropdown-header
+                  span.dropdown-name= currentUser.name
+                  span.dropdown-email= currentUser.email
+                .dropdown-divider
+                a.dropdown-item(href=`/users/${currentUser.user_id}`) My Profile
+                a.dropdown-item(href="/edit-profile") Edit Profile
+                a.dropdown-item(href="/settings") Settings
+                .dropdown-divider
+                a.dropdown-item(href="/my-listings") My Listings
+                a.dropdown-item(href="/create-listing") + Create Listing
+                .dropdown-divider
+                a.dropdown-item(href="/dashboard/borrow") Borrow Dashboard
+                a.dropdown-item(href="/dashboard/lend") Lending Dashboard
+                .dropdown-divider
+                if currentUser.role === 'admin'
+                  a.dropdown-item.dropdown-admin(href="/admin") Admin Panel
+                  .dropdown-divider
+                a.dropdown-item.dropdown-logout(href="/logout") Logout
+          else
+            a.nav-btn-secondary(href="/login") Login
+            a.nav-btn(href="/register") Register
     main.main-content
       block content
     footer.footer
@@ -34,3 +69,14 @@ html(lang="en")
           a(href="#") Terms of Use
       .footer-bottom
         p &copy; 2026 OutfitShare | TriCode Labs | University of Roehampton
+    script.
+      // Dropdown toggle
+      document.querySelectorAll('.nav-dropdown-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          btn.parentElement.classList.toggle('open');
+        });
+      });
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+      });

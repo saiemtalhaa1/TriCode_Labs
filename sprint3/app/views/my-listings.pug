@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .page-header-row
+        div
+          h1.page-title My Listings
+          p.page-subtitle Manage your shared outfits.
+        a.btn.btn-primary(href="/create-listing") + Create New Listing
+
+      if listings.length > 0
+        .listings-grid
+          each listing in listings
+            .listing-card
+              .card-image
+                if listing.image_url
+                  img(src=listing.image_url alt=listing.title)
+                else
+                  .card-placeholder= listing.title.charAt(0)
+                if listing.listing_type === 'Giveaway'
+                  span.badge.badge-giveaway Giveaway
+                if listing.boost_active
+                  span.badge.badge-boost Boosted
+              .card-body
+                h3.card-title
+                  a(href=`/listings/${listing.listing_id}`)= listing.title
+                .card-meta
+                  span.card-size Size: #{listing.size}
+                  if listing.location
+                    span.card-location= listing.location
+                if listing.tags
+                  .card-tags
+                    each tag in listing.tags.split(',')
+                      span.tag-small= tag.trim()
+                .card-status-row
+                  if listing.pending_requests > 0
+                    span.status-badge.status-pending #{listing.pending_requests} pending request#{listing.pending_requests > 1 ? 's' : ''}
+                  if listing.active_borrows > 0
+                    span.status-badge.status-active #{listing.active_borrows} active
+                .card-actions-row
+                  a.btn.btn-small(href=`/listings/${listing.listing_id}`) View
+                  a.btn.btn-small.btn-secondary(href=`/listings/${listing.listing_id}/edit`) Edit
+                  if listing.boost_active
+                    span.boost-active-badge Boosted
+                  else
+                    form.inline-form(method="POST" action=`/listings/${listing.listing_id}/boost` onsubmit="return confirm('Boost for 50 points?')")
+                      button.btn.btn-small.btn-boost(type="submit") ⚡ Boost
+                  form.inline-form(method="POST" action=`/listings/${listing.listing_id}/delete` onsubmit="return confirm('Delete this listing?')")
+                    button.btn.btn-small.btn-danger(type="submit") Delete
+      else
+        .empty-state
+          h3 No listings yet
+          p Start sharing by creating your first listing.
+          a.btn.btn-primary(href="/create-listing") Create a Listing

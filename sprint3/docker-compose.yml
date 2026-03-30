@@ -1,29 +1,12 @@
-version: "3.8"
-
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./app:/app
-      - /app/node_modules
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=outfitshare123
-      - DB_NAME=outfitshare
-      - DB_PORT=3306
-    command: npx nodemon index.js
-
   db:
     image: mysql:8.0
+    container_name: outfitshare-db
     environment:
-      MYSQL_ROOT_PASSWORD: outfitshare123
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: outfitshare
+      MYSQL_USER: outfitshare_user
+      MYSQL_PASSWORD: outfitshare_pass
     ports:
       - "3306:3306"
     volumes:
@@ -34,6 +17,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  app:
+    build: .
+    container_name: outfitshare-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    environment:
+      DB_HOST: db
+      DB_USER: outfitshare_user
+      DB_PASSWORD: outfitshare_pass
+      DB_NAME: outfitshare
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["npx", "nodemon", "index.js"]
 
 volumes:
   db_data:

@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .auth-page
+        .auth-card
+          .auth-tabs
+            a.auth-tab.active(href="/register") Register New Account
+            a.auth-tab(href="/login") Login
+
+          if error
+            .alert.alert-error= error
+
+          form.auth-form(method="POST" action="/register")
+            .form-group
+              label(for="name") Full Name
+              input#name(type="text" name="name" placeholder="Your full name" required)
+            .form-group
+              label(for="email") Email
+              input#email(type="email" name="email" placeholder="your@email.com" required)
+            .form-group
+              label(for="password") Password
+              input#password(type="password" name="password" placeholder="Min 6 characters" required minlength="6")
+            .form-group
+              label(for="confirm_password") Confirm Password
+              input#confirm_password(type="password" name="confirm_password" placeholder="Confirm password" required)
+
+            .personalise-section
+              .personalise-header
+                span.personalise-icon +
+                span Personalise Your Recommendations
+                span.skip-link (optional)
+              .personalise-fields
+                .form-row
+                  .form-group.form-half
+                    label(for="height") Height (cm)
+                    input#height(type="number" name="height" placeholder="e.g. 170")
+                  .form-group.form-half
+                    label(for="age") Age
+                    input#age(type="number" name="age" placeholder="e.g. 25")
+                .form-group
+                  label(for="clothing_size") Clothing Size
+                  select#clothing_size(name="clothing_size")
+                    option(value="") Skip for now
+                    option(value="XS") XS
+                    option(value="S") S
+                    option(value="M") M
+                    option(value="L") L
+                    option(value="XL") XL
+                    option(value="XXL") XXL
+
+            button.btn.btn-primary.btn-full(type="submit") Create Account
+
+          p.auth-switch Already have an account? 
+            a(href="/login") Login here
