@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+  section.section
+    .container
+      .page-header-row
+        div
+          h1.page-title Manage Users
+          p.page-subtitle View and moderate all platform users.
+        a.btn.btn-secondary(href="/admin") Back to Dashboard
+
+      .admin-table
+        each user in users
+          .admin-row
+            .admin-row-main
+              if user.profile_image
+                img.admin-avatar(src=user.profile_image alt=user.name)
+              else
+                .avatar-placeholder.admin-avatar-placeholder= user.name.charAt(0)
+              div
+                span.admin-row-title= user.name
+                span.admin-row-meta #{user.email} | #{user.location || 'No location'} | #{user.listing_count} listings | #{user.request_count} requests
+                .user-ratings-inline
+                  span Borrow: #{user.borrow_rating ? user.borrow_rating.toFixed(1) + '★' : 'N/A'}
+                  span  | Lend: #{user.lend_rating ? user.lend_rating.toFixed(1) + '★' : 'N/A'}
+                  span  | Points: #{user.reward_points}
+            .admin-row-actions
+              span.status-badge(class=user.role === 'admin' ? 'status-active' : user.role === 'suspended' ? 'status-pending' : 'status-completed')= user.role
+              a.btn.btn-small(href=`/users/${user.user_id}`) View
+              if user.role !== 'admin'
+                if user.role === 'suspended'
+                  form.inline-form(method="POST" action=`/admin/users/${user.user_id}/reinstate`)
+                    button.btn.btn-small.btn-primary(type="submit") Reinstate
+                else
+                  form.inline-form(method="POST" action=`/admin/users/${user.user_id}/suspend` onsubmit="return confirm('Suspend this user?')")
+                    button.btn.btn-small.btn-danger(type="submit") Suspend

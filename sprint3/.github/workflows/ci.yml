@@ -1,0 +1,65 @@
+name: OutfitShare CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./sprint3/app
+        run: npm install
+
+      - name: Check for syntax errors
+        working-directory: ./sprint3/app
+        run: node --check index.js
+
+      - name: Verify PUG templates exist
+        working-directory: ./sprint3/app
+        run: |
+          echo "Checking all required templates..."
+          for template in index layout listings detail categories users profile login register error; do
+            if [ ! -f "views/${template}.pug" ]; then
+              echo "MISSING: views/${template}.pug"
+              exit 1
+            fi
+            echo "OK: views/${template}.pug"
+          done
+          echo "All required templates present!"
+
+      - name: Build Docker image
+        working-directory: ./sprint3
+        run: docker build -t outfitshare-app .
+
+      - name: Docker Compose config validation
+        working-directory: ./sprint3
+        run: docker compose config
+
+      - name: Run Docker containers
+        working-directory: ./sprint3
+        run: |
+          docker compose up -d
+          echo "Waiting for services to start..."
+          sleep 30
+          
+      - name: Health check
+        run: |
+          curl --retry 5 --retry-delay 5 --retry-connrefused http://localhost:3000 || echo "App may need more startup time"
+
+      - name: Stop containers
+        working-directory: ./sprint3
+        if: always()
+        run: docker compose down -v

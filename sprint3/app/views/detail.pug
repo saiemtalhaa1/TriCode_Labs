@@ -1,0 +1,173 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .breadcrumb
+        a(href="/") Home
+        span  / 
+        a(href="/listings") Listings
+        span  / 
+        span= listing.title
+
+      .detail-layout
+        .detail-image
+          if listing.image_url
+            img.detail-img(src=listing.image_url alt=listing.title)
+          else
+            .detail-placeholder= listing.title.charAt(0)
+          if listing.boost_active
+            span.badge.badge-boost.badge-large Boosted Listing
+          if listing.listing_type === 'Giveaway'
+            span.badge.badge-giveaway.badge-large Free Giveaway
+
+        .detail-info
+          h1.detail-title= listing.title
+          if currentUser && currentUser.user_id === listing.owner_user_id
+            .owner-actions
+              a.btn.btn-secondary.btn-small(href=`/listings/${listing.listing_id}/edit`) Edit Listing
+              if listing.boost_active && listing.boost_expiry && new Date(listing.boost_expiry) > new Date()
+                span.boost-active-badge Boosted until #{new Date(listing.boost_expiry).toLocaleDateString('en-GB')}
+              else
+                form.inline-form(method="POST" action=`/listings/${listing.listing_id}/boost` onsubmit="return confirm('Boost this listing for 50 reward points? It will appear higher in search for 7 days.')")
+                  button.btn.btn-boost.btn-small(type="submit") ⚡ Boost (50 pts)
+            if borrowError === 'already_boosted'
+              .alert.alert-error This listing is already boosted.
+            if borrowError === 'insufficient_points'
+              .alert.alert-error You don't have enough reward points. Boosting costs 50 points.
+
+          .detail-meta
+            .meta-item
+              span.meta-label Type
+              span.meta-value= listing.listing_type
+            .meta-item
+              span.meta-label Size
+              span.meta-value= listing.size
+            .meta-item
+              span.meta-label Location
+              span.meta-value= listing.location || 'Not specified'
+            if avgRating
+              .meta-item
+                span.meta-label Rating
+                span.meta-value #{avgRating} ★ (#{reviews.length} review#{reviews.length !== 1 ? 's' : ''})
+
+          if tags.length > 0
+            .detail-tags
+              each tag in tags
+                a.tag-pill(href=`/listings?tag=${tag.tag_name}`)= tag.tag_name
+
+          .detail-description
+            h3 Description
+            p= listing.description
+
+          if slots.length > 0
+            .detail-availability
+              h3 Availability
+              .slots-list
+                each slot in slots
+                  - var endDate = new Date(slot.end_date)
+                  - var isExpired = endDate < new Date()
+                  .slot-item(class=isExpired ? 'slot-expired' : '')
+                    span #{new Date(slot.start_date).toLocaleDateString('en-GB')} to #{endDate.toLocaleDateString('en-GB')}
+                    if isExpired
+                      span.slot-badge-expired  — Expired
+
+          //- Check if listing is expired
+          - var listingExpired = false
+          - if (slots.length > 0) { var maxEnd = new Date(Math.max(...slots.map(s => new Date(s.end_date)))); listingExpired = maxEnd < new Date(); }
+
+          //- Borrow Request Form
+          if listingExpired
+            .borrow-form-section.expired-section
+              p.expired-message This listing has expired and is no longer available for borrowing.
+          else if currentUser && currentUser.user_id !== listing.owner_user_id
+            .borrow-form-section
+              h3 Request to #{listing.listing_type === 'Giveaway' ? 'Claim' : 'Borrow'}
+              if borrowError === 'dates'
+                .alert.alert-error Your requested dates fall outside the listing's availability period. Please choose dates within the available range shown above.
+              if borrowError === 'overlap'
+                .alert.alert-error Those dates conflict with an existing booking. Please choose different dates.
+              if borrowError === 'own'
+                .alert.alert-error You cannot borrow your own listing.
+              if borrowError === 'fail'
+                .alert.alert-error Something went wrong. Please try again.
+              form(method="POST" action=`/borrow/${listing.listing_id}`)
+                .form-row
+                  .form-group.form-half
+                    label(for="start_date") Start Date
+                    input#start_date(type="date" name="start_date" required min=new Date().toISOString().split('T')[0])
+                  .form-group.form-half
+                    label(for="end_date") End Date
+                    input#end_date(type="date" name="end_date" required)
+                if slots.length > 0
+                  p.form-hint You must borrow and return within the available dates above. Requests outside this window will be rejected.
+                button.btn.btn-primary.btn-large.btn-full(type="submit")= listing.listing_type === 'Borrow' ? 'Reserve Now' : 'Request Giveaway'
+          else if !currentUser
+            .borrow-form-section
+              a.btn.btn-primary.btn-large(href="/login") Login to Reserve
+          else
+            .borrow-form-section
+              p.empty-text This is your listing.
+
+          .detail-owner
+            h3 Listed by
+            .owner-card
+              if listing.owner_image
+                img.avatar-img.avatar-small(src=listing.owner_image alt=listing.owner_name)
+              else
+                .avatar-placeholder.avatar-small= listing.owner_name.charAt(0)
+              .owner-details
+                a.owner-name(href=`/users/${listing.owner_user_id}`)= listing.owner_name
+                if listing.owner_location
+                  span.owner-location= listing.owner_location
+                if listing.owner_rating
+                  span.owner-rating Lend Rating: #{listing.owner_rating.toFixed(1)} ★
+
+      .detail-reviews
+        h2.section-title Reviews (#{reviews.length})
+        if reviews.length > 0
+          .reviews-list
+            each review in reviews
+              .review-card
+                .review-header
+                  .review-author
+                    span= review.reviewer_name
+                  span.review-rating= '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)
+                p.review-comment= review.comment
+        else
+          p.empty-state No reviews yet.
+
+        if currentUser && !listingExpired
+          .review-form-section
+            h3 Leave a Review
+            form(method="POST" action=`/review/${listing.listing_id}`)
+              .form-group
+                label Rating
+                select(name="rating" required)
+                  option(value="") Select...
+                  option(value="5") ★★★★★ Excellent
+                  option(value="4") ★★★★ Great
+                  option(value="3") ★★★ Good
+                  option(value="2") ★★ Fair
+                  option(value="1") ★ Poor
+              .form-group
+                textarea(name="comment" rows="3" placeholder="Write your review..." required)
+              button.btn.btn-primary.btn-small(type="submit") Submit Review
+
+      if related.length > 0
+        h2.section-title You Might Also Like
+        .listings-grid
+          each item in related
+            .listing-card
+              .card-image
+                if item.image_url
+                  img(src=item.image_url alt=item.title)
+                else
+                  .card-placeholder= item.title.charAt(0)
+              .card-body
+                h3.card-title
+                  a(href=`/listings/${item.listing_id}`)= item.title
+                .card-meta
+                  span.card-size Size: #{item.size}
+                  span.card-location= item.location
+                a.btn.btn-small(href=`/listings/${item.listing_id}`) View Details

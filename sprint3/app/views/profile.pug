@@ -1,0 +1,108 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .profile-header
+        .profile-avatar
+          if user.profile_image
+            img.avatar-img.avatar-large(src=user.profile_image alt=user.name)
+          else
+            .avatar-placeholder.avatar-large= user.name.charAt(0)
+        .profile-info
+          h1= user.name
+          if currentUser && currentUser.user_id === user.user_id
+            .profile-actions
+              a.btn.btn-secondary.btn-small(href="/edit-profile") Edit Profile
+              a.btn.btn-secondary.btn-small(href="/settings") Settings
+          if user.bio
+            p.profile-bio= user.bio
+
+          .profile-detail-grid
+            if user.location && (user.privacy_location || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Location
+                span.detail-value= user.location
+            if user.clothing_size
+              .profile-detail-item
+                span.detail-label Size
+                span.detail-value= user.clothing_size
+            if user.age && (user.privacy_age || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Age
+                span.detail-value= user.age
+            if user.email && (user.privacy_email || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Email
+                span.detail-value= user.email
+            if user.phone && (user.privacy_phone || (currentUser && currentUser.user_id === user.user_id))
+              .profile-detail-item
+                span.detail-label Phone
+                span.detail-value= user.phone
+
+          .profile-details
+            if user.profile_completed
+              span.detail-badge.badge-verified Profile Completed
+            else
+              span.detail-badge.badge-pending Profile Incomplete
+
+          .profile-stats
+            .profile-stat
+              span.stat-number= stats.listings
+              span.stat-label Listings
+            .profile-stat
+              span.stat-number= stats.borrows
+              span.stat-label Borrowed
+            .profile-stat
+              span.stat-number= stats.lends
+              span.stat-label Lent
+            .profile-stat
+              span.stat-number= user.reward_points
+              span.stat-label Points
+          .profile-ratings
+            .rating-block
+              span.rating-label Borrow Rating
+              span.rating-value= user.borrow_rating ? user.borrow_rating.toFixed(1) + ' ★' : 'No ratings yet'
+            .rating-block
+              span.rating-label Lend Rating
+              span.rating-value= user.lend_rating ? user.lend_rating.toFixed(1) + ' ★' : 'No ratings yet'
+
+      h2.section-title #{user.name}'s Listings
+      if listings.length > 0
+        .listings-grid
+          each listing in listings
+            .listing-card
+              .card-image
+                if listing.image_url
+                  img(src=listing.image_url alt=listing.title)
+                else
+                  .card-placeholder= listing.title.charAt(0)
+                if listing.listing_type === 'Giveaway'
+                  span.badge.badge-giveaway Giveaway
+                if listing.boost_active
+                  span.badge.badge-boost Boosted
+              .card-body
+                h3.card-title
+                  a(href=`/listings/${listing.listing_id}`)= listing.title
+                .card-meta
+                  span.card-size Size: #{listing.size}
+                  if listing.location
+                    span.card-location= listing.location
+                if listing.tags
+                  .card-tags
+                    each tag in listing.tags.split(',')
+                      span.tag-small= tag.trim()
+                a.btn.btn-small(href=`/listings/${listing.listing_id}`) View Details
+      else
+        p.empty-state This user hasn't created any listings yet.
+
+      if reviews.length > 0
+        h2.section-title Reviews Received
+        .reviews-list
+          each review in reviews
+            .review-card
+              .review-header
+                span.review-author= review.reviewer_name
+                span.review-rating= '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)
+              p.review-comment= review.comment
+              span.review-listing On: #{review.listing_title}

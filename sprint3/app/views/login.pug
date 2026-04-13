@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  section.section
+    .container
+      .auth-page
+        .auth-card
+          .auth-tabs
+            a.auth-tab(href="/register") Register New Account
+            a.auth-tab.active(href="/login") Login
+
+          if error
+            .alert.alert-error= error
+
+          form.auth-form(method="POST" action="/login")
+            .form-group
+              label(for="email") Email
+              input#email(type="email" name="email" placeholder="your@email.com" required)
+            .form-group
+              label(for="password") Password
+              input#password(type="password" name="password" placeholder="Your password" required)
+
+            button.btn.btn-primary.btn-full(type="submit") Login
+
+          p.auth-switch Don't have an account? 
+            a(href="/register") Register here
+
+          .demo-login
+            p.demo-title Try a demo account:
+            p.demo-info Email: alex@example.com | Password: password123

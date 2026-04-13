@@ -1,0 +1,97 @@
+extends layout
+
+block content
+  section.hero
+    .hero-content
+      h1 Discover Shared Outfits
+      p Borrow, lend, and share clothing within your community. Sustainable fashion starts here.
+      form.hero-search(method="GET" action="/listings")
+        input.hero-search-input(type="text" name="search" placeholder="Find outfits by size, style, or keyword...")
+        button.btn.btn-primary(type="submit") Search
+      .hero-stats
+        .stat
+          span.stat-number= stats.listings
+          span.stat-label Outfits Available
+        .stat
+          span.stat-number= stats.users
+          span.stat-label Community Members
+      .hero-actions
+        a.btn.btn-primary(href="/listings") Browse Outfits
+        if currentUser
+          a.btn.btn-secondary(href="/create-listing") List an Outfit
+        else
+          a.btn.btn-secondary(href="/register") Join Community
+
+  section.section
+    .container
+      h2.section-title Quick Browse Categories
+      .tags-row
+        each tag in tags
+          a.tag-pill(href=`/listings?tag=${tag.name}`)= tag.name
+
+  section.section.section-alt
+    .container
+      h2.section-title Featured Outfits
+      .listings-grid
+        each listing in listings
+          .listing-card
+            .card-image
+              if listing.image_url
+                img(src=listing.image_url alt=listing.title)
+              else
+                .card-placeholder= listing.title.charAt(0)
+              if listing.boost_active
+                span.badge.badge-boost Boosted
+              if listing.listing_type === 'Giveaway'
+                span.badge.badge-giveaway Giveaway
+              if listing.available_until && new Date(listing.available_until) < new Date()
+                span.badge.badge-expired Expired
+            .card-body
+              h3.card-title
+                a(href=`/listings/${listing.listing_id}`)= listing.title
+              .card-meta
+                span.card-size Size: #{listing.size}
+                span.card-location= listing.location
+              if listing.available_until
+                .card-expiry
+                  if new Date(listing.available_until) < new Date()
+                    span.expiry-text.expired Listing expired
+                  else
+                    span.expiry-text Available until #{new Date(listing.available_until).toLocaleDateString('en-GB')}
+              .card-owner
+                span By 
+                a(href=`/users/${listing.owner_id}`)= listing.owner_name
+              .card-actions
+                a.btn.btn-small(href=`/listings/${listing.listing_id}`) View Details
+
+  section.section
+    .container
+      h2.section-title How It Works
+      .steps-row
+        .step
+          .step-number 1
+          h3 Browse
+          p Explore outfits shared by community members near you.
+        .step
+          .step-number 2
+          h3 Request
+          p Send a borrow request for the outfit you love.
+        .step
+          .step-number 3
+          h3 Wear & Return
+          p Enjoy the outfit and return it when you're done.
+        .step
+          .step-number 4
+          h3 Earn Points
+          p Build trust and earn reward points for sharing.
+
+  section.section.cta-section
+    .container
+      if currentUser
+        h2 Share something from your wardrobe
+        p List an outfit today and earn reward points while helping your community.
+        a.btn.btn-primary.btn-large(href="/create-listing") Create a Listing
+      else
+        h2 Ready to start sharing?
+        p Join OutfitShare today and be part of the sustainable fashion movement.
+        a.btn.btn-primary.btn-large(href="/register") Register Now - Free
