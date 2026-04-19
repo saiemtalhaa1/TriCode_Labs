@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .container
+        h1 #{listing.title}
+
+        //- Show the listing details
+        .listing-info
+            p
+                strong Description: 
+                | #{listing.description}
+            p
+                strong Size: 
+                | #{listing.size}
+            p
+                strong Location: 
+                | #{listing.location}
+            p
+                strong Listed By: 
+                | #{listing.owner_name}
+            p
+                strong Owner Location: 
+                | #{listing.owner_location}
+            p
+                strong Listed On: 
+                | #{listing.created_at}
+
+        //- Link back to all listings
+        p
+            a(href="/listings") Back to all listings

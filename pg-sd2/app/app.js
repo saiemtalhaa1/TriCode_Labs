@@ -4,45 +4,57 @@ const express = require("express");
 // Create express app
 var app = express();
 
+// Use the Pug templating engine
+app.set('view engine', 'pug');
+app.set('views', './app/views');
+
 // Add static files location
 app.use(express.static("static"));
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
-// Create a route for root - /
-app.get("/", function(req, res) {
-    res.send("Hello world!");
-});
+// ============================================
+// Import route files - one per team member page
+// ============================================
+const userRoutes = require('./routes/users');       // Farhan - user list page
+const profileRoutes = require('./routes/profile');  // Talha - user profile page
+const tagRoutes = require('./routes/tags');         // Talha - tags / categories page
+const listingRoutes = require('./routes/listings'); // Enric - listings browse page
+const detailRoutes = require('./routes/detail');    // Yash - listing detail page
 
-// Create a route for testing the db
-app.get("/db_test", function(req, res) {
-    // Assumes a table called test_table exists in your database
-    sql = 'select * from test_table';
+// Tell the app to use each route file
+app.use(userRoutes);
+app.use(profileRoutes);
+app.use(tagRoutes);
+app.use(listingRoutes);
+app.use(detailRoutes);
+
+// ============================================
+// Homepage route
+// ============================================
+app.get("/", function(req, res) {
+    // Get some counts to show on the homepage
+    var sql = 'SELECT COUNT(*) AS count FROM Users';
     db.query(sql).then(results => {
-        console.log(results);
-        res.send(results)
+        var userCount = results[0].count;
+
+        // Also get how many listings there are
+        var sql2 = 'SELECT COUNT(*) AS count FROM Listings';
+        db.query(sql2).then(results2 => {
+            var listingCount = results2[0].count;
+
+            // Send both counts to the homepage template
+            res.render("index", {
+                title: "OutfitShare - Community Clothing Platform",
+                userCount: userCount,
+                listingCount: listingCount,
+            });
+        });
     });
 });
 
-// Create a route for /goodbye
-// Responds to a 'GET' request
-app.get("/goodbye", function(req, res) {
-    res.send("Goodbye world!");
-});
-
-// Create a dynamic route for /hello/<name>, where name is any value provided by user
-// At the end of the URL
-// Responds to a 'GET' request
-app.get("/hello/:name", function(req, res) {
-    // req.params contains any parameters in the request
-    // We can examine it in the console for debugging purposes
-    console.log(req.params);
-    //  Retrieve the 'name' parameter and use it in a dynamically generated page
-    res.send("Hello " + req.params.name);
-});
-
 // Start server on port 3000
-app.listen(3000,function(){
-    console.log(`Server running at http://127.0.0.1:3000/`);
+app.listen(3000, function() {
+    console.log("Server running at http://127.0.0.1:3000/");
 });

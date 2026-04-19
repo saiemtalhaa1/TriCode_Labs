@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        title= title || 'OutfitShare'
+        link(rel="stylesheet" href="/css/style.css")
+    body
+        //- Navigation bar at the top of every page
+        nav.navbar
+            .nav-container
+                a.nav-logo(href="/") OutfitShare
+                .nav-links
+                    a(href="/") Home
+                    a(href="/users") Community
+                    a(href="/listings") Browse Outfits
+                    a(href="/tags") Categories
+
+        //- Main content area - each page fills this in
+        .main-content
+            block content
+
+        //- Footer at the bottom of every page
+        footer.footer
+            .footer-container
+                p &copy; 2026 OutfitShare | TriCode Labs | University of Roehampton

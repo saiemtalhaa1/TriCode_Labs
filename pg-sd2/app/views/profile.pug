@@ -1,0 +1,52 @@
+extends layout
+
+block content
+    .container
+        h1 #{user.name}
+
+        //- Show the user details
+        .profile-info
+            p
+                strong Email: 
+                | #{user.email}
+            p
+                strong Location: 
+                | #{user.location}
+            p
+                strong Clothing Size: 
+                | #{user.clothing_size}
+            p
+                strong Bio: 
+                | #{user.bio}
+            p
+                strong Reward Points: 
+                | #{user.reward_points}
+            p
+                strong Member Since: 
+                | #{user.created_at}
+
+        //- Show the listings that belong to this user
+        h2 Listings by #{user.name}
+
+        if listings.length > 0
+            table(border=1)
+                tr
+                    th Title
+                    th Description
+                    th Size
+                    th Location
+                    th Details
+                for item in listings
+                    tr
+                        td #{item.title}
+                        td #{item.description}
+                        td #{item.size}
+                        td #{item.location}
+                        td
+                            a(href='/listings/' + item.listing_id) View Listing
+        else
+            p This user has no listings yet.
+
+        //- Link back to all users
+        p
+            a(href="/users") Back to all users

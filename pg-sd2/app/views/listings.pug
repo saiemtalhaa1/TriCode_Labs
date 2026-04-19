@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    .container
+        h1 Browse Outfits
+        p Find outfits available to borrow from the community.
+
+        //- Debug line to check data in the console (from lab)
+        - console.log(data)
+
+        //- Show all listings in a table
+        table(border=1)
+            //- Table header row
+            tr
+                th Title
+                th Description
+                th Size
+                th Location
+                th Listed By
+                th Details
+
+            //- Loop through each listing and create a row
+            for item in data
+                tr
+                    td #{item.title}
+                    td #{item.description}
+                    td #{item.size}
+                    td #{item.location}
+                    td #{item.owner_name}
+                    td
+                        //- Link to the listing detail page
+                        a(href='/listings/' + item.listing_id) View Details

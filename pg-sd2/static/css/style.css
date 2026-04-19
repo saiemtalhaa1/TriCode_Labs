@@ -1,0 +1,192 @@
+/* OutfitShare - Basic Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background: #f9f9f9;
+}
+
+a {
+    color: #3a9d5e;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2d7a49;
+    text-decoration: underline;
+}
+
+.navbar {
+    background: white;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+}
+
+.nav-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #3a9d5e;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #333;
+}
+
+.main-content {
+    min-height: 70vh;
+    background: white;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 30px 20px;
+    background: #e8f5ec;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.hero-section h1 {
+    font-size: 2rem;
+}
+
+.stats-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.stat-box {
+    background: white;
+    padding: 20px 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-box h2 {
+    color: #3a9d5e;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.stat-box p {
+    color: #666;
+    margin: 0;
+}
+
+.actions-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #f5f5f5;
+    font-weight: bold;
+}
+
+tr:hover {
+    background: #f9f9f9;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: white;
+    color: #3a9d5e;
+    border: 2px solid #3a9d5e;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.btn:hover {
+    background: #3a9d5e;
+    color: white;
+    text-decoration: none;
+}
+
+.profile-info, .listing-info {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.profile-info p, .listing-info p {
+    margin-bottom: 8px;
+}
+
+.category-section {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.category-section h2 {
+    color: #3a9d5e;
+    margin-top: 0;
+}
+
+.footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}

@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    .container
+        h1 Browse by Category
+        p See outfits organised by category.
+
+        //- Loop through each tag and show its listings underneath
+        for tag in tags
+            .category-section
+                h2 #{tag.name}
+                p #{tag.description}
+
+                //- Check if there are any listings in this tag
+                if grouped[tag.name].length > 0
+                    table(border=1)
+                        tr
+                            th Title
+                            th Size
+                            th Location
+                            th Owner
+                            th View
+                        //- Loop through each listing in this tag
+                        each item in grouped[tag.name]
+                            tr
+                                td #{item.title}
+                                td #{item.size}
+                                td #{item.location}
+                                td #{item.owner_name}
+                                td
+                                    a(href='/listings/' + item.listing_id) View
+                else
+                    p No outfits in this category yet.

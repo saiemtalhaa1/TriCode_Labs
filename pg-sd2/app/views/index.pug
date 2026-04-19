@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    .container
+        //- Hero section with welcome message
+        .hero-section
+            h1 Welcome to OutfitShare
+            p Borrow, lend, and share clothing within your community.
+            p Sustainable fashion starts here.
+
+        //- Show some stats about the platform
+        .stats-section
+            .stat-box
+                h2 #{userCount}
+                p Members
+            .stat-box
+                h2 #{listingCount}
+                p Outfits Listed
+
+        //- Links to the main sections
+        .actions-section
+            a.btn(href="/listings") Browse Outfits
+            a.btn(href="/users") View Community
+            a.btn(href="/tags") Browse Categories

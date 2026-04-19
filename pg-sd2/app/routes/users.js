@@ -1,6 +1,6 @@
-// User routes
+// User list routes
 // Created by Farhan
-// This file handles the routes for showing the list of users
+// This file handles the route for showing all users
 
 const express = require("express");
 const router = express.Router();
@@ -8,18 +8,18 @@ const router = express.Router();
 // Get the database functions
 const db = require('../services/db');
 
-// Route to display all users
-// This is like the all-students route from the lab
+// Route to display all users in a table
+// Similar to the all-students-formatted route from the lab
 router.get("/users", function(req, res) {
-    // Write the SQL query to get all users
+    // SQL query to get all users from the database
     var sql = 'SELECT * FROM Users';
 
-    // Run the query and send results to the template
+    // Run the query and then send results to the template
     db.query(sql).then(results => {
-        // Log the results so we can check in the console
+        // Log results to check in the console
         console.log(results);
 
-        // Render the users template and pass the data
+        // Render the users.pug template and pass the data
         res.render("users", { data: results });
     });
 });
