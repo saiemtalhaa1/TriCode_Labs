@@ -1,6 +1,6 @@
 // Tags / Categories routes
 // Created by Talha
-// This file handles the route for showing all tags and the listings in each
+// This file handles the route for showing all tags and the listings 
 
 const express = require("express");
 const router = express.Router();
