@@ -13,21 +13,14 @@ block content
 
                 //- Check if there are any listings in this tag
                 if grouped[tag.name].length > 0
-                    table(border=1)
-                        tr
-                            th Title
-                            th Size
-                            th Location
-                            th Owner
-                            th View
-                        //- Loop through each listing in this tag
+                    .card-grid
                         each item in grouped[tag.name]
-                            tr
-                                td #{item.title}
-                                td #{item.size}
-                                td #{item.location}
-                                td #{item.owner_name}
-                                td
-                                    a(href='/listings/' + item.listing_id) View
+                            .outfit-card
+                                img(src=item.image_url alt=item.title)
+                                .card-body
+                                    h3 #{item.title}
+                                    p Size: #{item.size}
+                                    p By: #{item.owner_name}
+                                    a.btn(href='/listings/' + item.listing_id) View
                 else
                     p No outfits in this category yet.

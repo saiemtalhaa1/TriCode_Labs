@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    .container
+        h1 Notifications
+        p Your recent activity on OutfitShare.
+
+        //- Debug line
+        - console.log(data)
+
+        if data.length > 0
+            for item in data
+                .notification-card
+                    p #{item.message}
+                    p.notification-date #{item.created_at}
+        else
+            p No notifications yet. You'll see updates here when people interact with your outfits.

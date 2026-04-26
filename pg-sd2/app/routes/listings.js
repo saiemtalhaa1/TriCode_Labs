@@ -26,3 +26,4 @@ router.get("/listings", function(req, res) {
 });
 
 module.exports = router;
+
