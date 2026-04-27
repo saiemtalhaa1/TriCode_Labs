@@ -17,8 +17,20 @@ block content
                 h2 #{listingCount}
                 p Outfits Listed
 
+        //- Featured outfits with images
+        h2 Featured Outfits
+        .card-grid
+            for item in listings
+                .outfit-card
+                    img(src=item.image_url alt=item.title)
+                    .card-body
+                        h3 #{item.title}
+                        p Size: #{item.size}
+                        p By: #{item.owner_name}
+                        a.btn(href='/listings/' + item.listing_id) View Details
+
         //- Links to the main sections
         .actions-section
-            a.btn(href="/listings") Browse Outfits
+            a.btn(href="/listings") Browse All Outfits
             a.btn(href="/users") View Community
             a.btn(href="/tags") Browse Categories

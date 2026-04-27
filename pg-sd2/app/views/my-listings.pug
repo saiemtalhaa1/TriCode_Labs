@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .container
+        h1 My Listings
+        p Manage the outfits you have listed on OutfitShare.
+
+        //- Debug line
+        - console.log(data)
+
+        //- Button to add a new listing
+        p
+            a.btn.btn-green(href="/create-listing") + Add New Listing
+
+        //- Show all the user's listings
+        if data.length > 0
+            .card-grid
+                for item in data
+                    .outfit-card
+                        img(src=item.image_url alt=item.title)
+                        .card-body
+                            h3 #{item.title}
+                            p #{item.description}
+                            p Size: #{item.size}
+                            p Location: #{item.location}
+                            p Listed: #{item.created_at}
+                            a.btn(href='/listings/' + item.listing_id) View Public Page
+        else
+            p You haven't listed any outfits yet.
+            p Click the button above to add your first one!

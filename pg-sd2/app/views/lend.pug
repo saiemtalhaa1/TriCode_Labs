@@ -1,0 +1,38 @@
+extends layout
+
+block content
+    .container
+        h1 My Lending Dashboard
+        p See who has requested to borrow your outfits.
+
+        //- Debug line
+        - console.log(data)
+
+        if data.length > 0
+            for item in data
+                .lend-row
+                    img(src=item.image_url alt=item.title class="small-img")
+                    .lend-info
+                        h3 #{item.title}
+                        p Size: #{item.size}
+                        p Requested by: #{item.borrower_name}
+                        p Dates: #{item.start_date} to #{item.end_date}
+                        p 
+                        p 
+                            strong Status: 
+                            span(class="status-" + item.status.toLowerCase())= item.status
+
+                    //- Show approve/reject buttons only when status is Pending
+                    .lend-actions
+                        if item.status == 'Pending'
+                            form(action='/lend/approve/' + item.request_id method='POST' class='inline-form')
+                                input(type="submit" value="Approve" class="btn-small btn-green")
+                            form(action='/lend/reject/' + item.request_id method='POST' class='inline-form')
+                                input(type="submit" value="Reject" class="btn-small btn-red")
+
+                        //- Complete button only when approved
+                        if item.status == 'Approved'
+                            form(action='/lend/complete/' + item.request_id method='POST' class='inline-form')
+                                input(type="submit" value="Mark Complete" class="btn-small btn-green")
+        else
+            p Nobody has requested to borrow your outfits yet.

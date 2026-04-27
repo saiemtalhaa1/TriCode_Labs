@@ -11,8 +11,23 @@ html
                 .nav-links
                     a(href="/") Home
                     a(href="/users") Community
-                    a(href="/listings") Browse Outfits
+                    a(href="/listings") Browse
                     a(href="/tags") Categories
+                    //- Only show these links when user is logged in
+                    if currentUser
+                        a(href="/my-listings") My Listings
+                        a(href="/borrow") My Borrows
+                        a(href="/lend") My Lends
+                        a(href="/notifications") Notifications
+                        a(href="/rewards") Points
+                .nav-auth
+                    //- Show login/register if not logged in, otherwise show name + logout
+                    if currentUser
+                        span.welcome Hi, #{currentUser.name}!
+                        a.nav-link-btn(href="/logout") Logout
+                    else
+                        a.nav-link-btn(href="/login") Login
+                        a.nav-btn(href="/register") Sign Up
 
         //- Main content area - each page fills this in
         .main-content
