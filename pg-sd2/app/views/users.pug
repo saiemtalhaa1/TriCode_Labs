@@ -5,28 +5,16 @@ block content
         h1 Community Members
         p Meet the people sharing outfits in our community.
 
-        //- Debug line to check data in the console (from lab)
+        //- Debug line to check data in the console
         - console.log(data)
 
-        //- Show all users in a table (same pattern as all-students.pug from the lab)
-        table(border=1)
-            //- Table header row
-            tr
-                th Name
-                th Email
-                th Location
-                th Size
-                th Points
-                th Profile
-
-            //- Loop through each user and create a row
+        //- Show all users as cards with their profile image
+        .user-grid
             for item in data
-                tr
-                    td #{item.name}
-                    td #{item.email}
-                    td #{item.location}
-                    td #{item.clothing_size}
-                    td #{item.reward_points}
-                    td
-                        //- Link to the user profile page
-                        a(href='/users/' + item.user_id) View Profile
+                .user-card
+                    img(src=item.profile_image alt=item.name class="profile-img")
+                    h3 #{item.name}
+                    p Location: #{item.location}
+                    p Size: #{item.clothing_size}
+                    p Points: #{item.reward_points}
+                    a.btn(href='/users/' + item.user_id) View Profile

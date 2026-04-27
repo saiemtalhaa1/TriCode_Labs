@@ -1,5 +1,6 @@
-/* OutfitShare - Basic Styles */
+/* OutfitShare - Sprint 3 Styles */
 
+/* Reset some defaults */
 * {
     margin: 0;
     padding: 0;
@@ -23,42 +24,77 @@ a:hover {
     text-decoration: underline;
 }
 
+/* ============ Navigation ============ */
 .navbar {
     background: white;
     border-bottom: 1px solid #ddd;
-    padding: 10px 20px;
+    padding: 12px 20px;
 }
 
 .nav-container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .nav-logo {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #3a9d5e;
 }
 
 .nav-links {
     display: flex;
-    gap: 20px;
+    gap: 18px;
+    flex-wrap: wrap;
 }
 
 .nav-links a {
     color: #333;
+    font-size: 0.95rem;
 }
 
+.nav-auth {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.welcome {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.nav-link-btn {
+    color: #333;
+    padding: 6px 14px;
+}
+
+.nav-btn {
+    background: #3a9d5e;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.nav-btn:hover {
+    background: #2d7a49;
+    color: white;
+    text-decoration: none;
+}
+
+/* ============ Main content ============ */
 .main-content {
     min-height: 70vh;
     background: white;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 30px 20px;
 }
@@ -66,40 +102,56 @@ a:hover {
 h1 {
     font-size: 1.8rem;
     margin-bottom: 15px;
+    color: #333;
 }
 
 h2 {
     font-size: 1.4rem;
     margin-top: 25px;
     margin-bottom: 15px;
+    color: #333;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
 p {
     margin-bottom: 10px;
 }
 
+ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* ============ Hero on homepage ============ */
 .hero-section {
     text-align: center;
-    padding: 30px 20px;
+    padding: 35px 20px;
     background: #e8f5ec;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .hero-section h1 {
     font-size: 2rem;
+    margin-bottom: 12px;
 }
 
+/* ============ Stats boxes ============ */
 .stats-section {
     display: flex;
     gap: 20px;
     justify-content: center;
     margin: 20px 0;
+    flex-wrap: wrap;
 }
 
 .stat-box {
     background: white;
-    padding: 20px 30px;
+    padding: 20px 35px;
     border: 1px solid #ddd;
     border-radius: 8px;
     text-align: center;
@@ -107,7 +159,7 @@ p {
 
 .stat-box h2 {
     color: #3a9d5e;
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin: 0;
 }
 
@@ -117,14 +169,195 @@ p {
 }
 
 .actions-section {
-    margin-top: 20px;
+    margin-top: 25px;
     text-align: center;
 }
 
+/* ============ Card grid for outfits ============ */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.outfit-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.outfit-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.outfit-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 12px;
+}
+
+.card-body h3 {
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.card-body p {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    color: #666;
+}
+
+/* ============ User grid ============ */
+.user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.user-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-img-large {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ============ Profile page header ============ */
+.profile-header {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.profile-info h1 {
+    margin-bottom: 8px;
+}
+
+.profile-info p {
+    margin-bottom: 4px;
+}
+
+/* ============ Detail page ============ */
+.detail-container {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.detail-img {
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.detail-info {
+    flex: 1;
+    min-width: 280px;
+}
+
+/* ============ Forms ============ */
+.form-box {
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+form {
+    margin-top: 15px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background: #3a9d5e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: auto;
+}
+
+input[type="submit"]:hover {
+    background: #2d7a49;
+}
+
+.error {
+    color: #cc0000;
+    background: #ffe6e6;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* ============ Tables ============ */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 15px;
     background: white;
 }
 
@@ -143,14 +376,17 @@ tr:hover {
     background: #f9f9f9;
 }
 
+/* ============ Buttons ============ */
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 8px 16px;
     background: white;
     color: #3a9d5e;
     border: 2px solid #3a9d5e;
     border-radius: 5px;
-    margin: 5px;
+    margin: 5px 5px 5px 0;
+    font-size: 0.9rem;
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -159,21 +395,164 @@ tr:hover {
     text-decoration: none;
 }
 
+.btn-small {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-green {
+    background: #3a9d5e;
+}
+
+.btn-green:hover {
+    background: #2d7a49;
+}
+
+.btn-red {
+    background: #cc4444;
+}
+
+.btn-red:hover {
+    background: #aa3333;
+}
+
+.inline-form {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* ============ Status colors ============ */
+.status-pending {
+    color: #d68f00;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: #3a9d5e;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #cc4444;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: #2d7a49;
+    font-weight: bold;
+}
+
+/* ============ Lend dashboard ============ */
+.lend-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.small-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.lend-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.lend-info h3 {
+    margin-bottom: 4px;
+}
+
+.lend-info p {
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+.lend-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* ============ Reviews section ============ */
+.reviews-section {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid #ddd;
+}
+
+.review-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.review-date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* ============ Notifications ============ */
+.notification-card {
+    background: white;
+    padding: 15px 18px;
+    border-left: 4px solid #3a9d5e;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.notification-date {
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* ============ Rewards ============ */
+.points-box {
+    background: #e8f5ec;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.points-box h2 {
+    color: #3a9d5e;
+    font-size: 3rem;
+    margin: 0;
+}
+
+.points-box p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+/* ============ Profile info box ============ */
 .profile-info, .listing-info {
     background: #f9f9f9;
-    padding: 20px;
+    padding: 18px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
-.profile-info p, .listing-info p {
-    margin-bottom: 8px;
-}
-
+/* ============ Categories sections ============ */
 .category-section {
     background: white;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     border: 1px solid #ddd;
     border-radius: 8px;
 }
@@ -183,10 +562,16 @@ tr:hover {
     margin-top: 0;
 }
 
+/* ============ Footer ============ */
 .footer {
     background: #333;
     color: white;
     padding: 20px;
     text-align: center;
     margin-top: 40px;
+}
+
+.footer-container p {
+    margin: 0;
+    color: white;
 }
