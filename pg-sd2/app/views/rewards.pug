@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    .container
+        h1 My Reward Points
+
+        //- Show the big points total
+        .points-box
+            h2 #{user.reward_points}
+            p Total Points
+
+        h2 How to Earn Points
+        ul
+            li Lend an outfit: +10 points
+            li Complete a borrow: +5 points
+            li Leave a review: +2 points (coming soon)
+
+        //- Points earning history
+        h2 Points History
+        if history.length > 0
+            table(border=1)
+                tr
+                    th Date
+                    th Reason
+                    th Points
+                for item in history
+                    tr
+                        td #{item.created_at}
+                        td #{item.reason}
+                        td +#{item.points}
+        else
+            p No points earned yet. Lend or borrow an outfit to start earning!

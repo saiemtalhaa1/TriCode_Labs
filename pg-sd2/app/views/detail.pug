@@ -2,29 +2,79 @@ extends layout
 
 block content
     .container
-        h1 #{listing.title}
+        .detail-container
+            //- Show the outfit image
+            img(src=listing.image_url alt=listing.title class="detail-img")
 
-        //- Show the listing details
-        .listing-info
-            p
-                strong Description: 
-                | #{listing.description}
-            p
-                strong Size: 
-                | #{listing.size}
-            p
-                strong Location: 
-                | #{listing.location}
-            p
-                strong Listed By: 
-                | #{listing.owner_name}
-            p
-                strong Owner Location: 
-                | #{listing.owner_location}
-            p
-                strong Listed On: 
-                | #{listing.created_at}
+            .detail-info
+                h1 #{listing.title}
 
-        //- Link back to all listings
+                p
+                    strong Description: 
+                    | #{listing.description}
+                p
+                    strong Size: 
+                    | #{listing.size}
+                p
+                    strong Location: 
+                    | #{listing.location}
+                p
+                    strong Listed By: 
+                    | #{listing.owner_name} (#{listing.owner_location})
+                p
+                    strong Listed On: 
+                    | #{listing.created_at}
+
+                //- Borrow request form - only if user is logged in
+                //- Uses POST like the add-note example from lab 10
+                if currentUser
+                    h2 Request to Borrow
+                    form(action='/borrow/' + listing.listing_id method='POST')
+                        div
+                            label(for="start_date") Start Date
+                            input(type="date" name="start_date" id="start_date" required)
+                        div
+                            label(for="end_date") End Date
+                            input(type="date" name="end_date" id="end_date" required)
+                        div
+                            input(type="submit" value="Send Borrow Request")
+                else
+                    p
+                        a(href="/login") Login to request to borrow
+
+        //- Reviews section
+        .reviews-section
+            h2 Reviews
+
+            //- Show all existing reviews
+            if reviews.length > 0
+                for review in reviews
+                    .review-card
+                        p
+                            strong #{review.reviewer_name}
+                            |  - Rating: #{review.rating}/5
+                        p #{review.comment}
+                        p.review-date #{review.created_at}
+            else
+                p No reviews yet. Be the first!
+
+            //- Review form - only if logged in
+            if currentUser
+                h3 Leave a Review
+                form(action='/review/' + listing.listing_id method='POST')
+                    div
+                        label(for="rating") Rating (1-5)
+                        select(name="rating" id="rating" required)
+                            option(value="5") 5 - Excellent
+                            option(value="4") 4 - Good
+                            option(value="3") 3 - Okay
+                            option(value="2") 2 - Poor
+                            option(value="1") 1 - Bad
+                    div
+                        label(for="comment") Comment
+                        textarea(name="comment" id="comment" required)
+                    div
+                        input(type="submit" value="Submit Review")
+
         p
             a(href="/listings") Back to all listings
