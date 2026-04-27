@@ -42,7 +42,6 @@ router.post("/create-listing", function(req, res) {
     var sql = "INSERT INTO Listings (title, description, size, location, image_url, owner_id) VALUES (?, ?, ?, ?, ?, ?)";
     db.query(sql, [title, description, size, location, imageUrl, ownerId]).then(results => {
         console.log("Listing created with id: " + results.insertId);
-        // Redirect to my-listings page so the user sees their new listing
         res.redirect("/my-listings");
     });
 });
