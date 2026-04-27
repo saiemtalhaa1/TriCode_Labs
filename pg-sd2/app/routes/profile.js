@@ -1,7 +1,7 @@
 // User profile routes
 // Created by Talha
 // This file handles the route for showing a single user profile
-// Also shows the listings owned by that user
+// Also shows the listings owned by user
 
 const express = require("express");
 const router = express.Router();
