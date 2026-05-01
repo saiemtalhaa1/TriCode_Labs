@@ -1,0 +1,34 @@
+name: OutfitShare Node CI
+
+on:
+  push:
+    branches: [ main, Talha ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: pg-sd2
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check JavaScript syntax
+        run: find . -path ./node_modules -prune -o -name "*.js" -print -exec node --check {} \;
+
+      - name: Check required packages
+        run: node -e "require('express'); require('pug'); require('mysql2'); console.log('OutfitShare CI checks passed')"
